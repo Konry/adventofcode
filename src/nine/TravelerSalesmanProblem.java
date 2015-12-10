@@ -37,80 +37,57 @@ public class TravelerSalesmanProblem {
 	}
 
 	private int moreWay(String nextNode, String start, String end, ArrayList<String> list, int recLevel) {
-		System.out.println();
-		for (int i = 0; i < recLevel; i++) {
-			System.out.print("------");
-		}
+		int distanceMin = 100000;
+		String startingNode = new String(nextNode);
+		// for (int i = 0; i < recLevel; i++) {
+		// System.out.print("------");
+		// }
+		// System.out.println();
+		// for (int i = 0; i < recLevel; i++) {
+		// System.out.print("------");
+		// }
+		System.out.println("recursion level " + recLevel + " input: nn:" + nextNode + " st:" +start + " end:"+ end + " " + print(list) + " "+list.size()+ " "+listOfCities.size());
 		int distance_min = START_MAX;
 
+		if (nextNode == end && list.size() == listOfCities.size()) {
+			System.out.println("Ende");
+			return 0;
+		} else if (nextNode == end) {
+			System.out.println("Fehler");
+			return BAD_POINTS;
+		}
+		System.out.println("Possibilities:");
+		System.out.println(print(list));
 		for (DistanceModel d : listOfDistances) {
-			if (d.start.equals(nextNode)) {
-				// System.out.println();
-				// System.out.println("Test " + d.print());
-				// if (start.equals("A") && end.equals("D"))
-				for (int i = 0; i < recLevel; i++) {
-					System.out.print("------");
-				}
-				System.out.println(
-				 "try way from: " + start + " to " + end + " over the edge " + d.start + " to " + d.end
-				 + " " + d.end.equals(end) + " " + list.size() + " " +
-				 listOfCities.size());
-				if (d.end.equals(end) && list.size() == listOfCities.size() - 1) {
-//					for (int i = 0; i < recLevel; i++) {
-//						System.out.print("------");
-//					}
-//					System.out.println("\n\n\n\nend found + " + list.size() + " " + listOfCities.size() + " "
-//							+ print(list) + "\n\n\n\n");
-					list.add(d.end);
-					return d.distance;
-				} else if (d.end.equals(end)) {
-					for (int i = 0; i < recLevel; i++) {
-						System.out.print("------");
-					}
-					System.out.println("BAD POINTS");
-					list.add(d.end);
-					return BAD_POINTS;
-				}
-				// ArrayList<String> visited = new ArrayList<>();
-				// for (String s : list) {
-				// visited.add(s);
-				// }
-
-				// if (start.equals("A") && end.equals("I"))
-				// System.out.println(print("visited list: ", visited) + "
-				// check: " + d.end + " "
-				// + alreadyNotVisited(d.end, visited));
-				if (alreadyNotVisited(d.end, list)) {
-					list.add(d.end);
-					// System.out.println(print("visited list: ", list) + "
-					// check: " + d.end + " "
-					// + alreadyNotVisited(d.end, list));
-
-					if (d.end.equals(end) && list.size() == listOfCities.size()) {
-						return d.distance;
-					}
-					int distance = moreWay(d.end, start, end, list, ++recLevel) + d.distance;
-					for (int i = 0; i < recLevel; i++) {
-						System.out.print("------");
-					}
-					System.out.println(d.print());
-					// System.out.println("BACKTRACE "+d.end);
-					// System.out.println("\n\n\n####################\n" +
-					// distance + "\n\n\n####################\n");
-					// System.out.println("dis: "+distance+ " :
-					// "+(distance_min > distance)+ (visited.size() ==
-					// listOfCities.size() - 1) + " "+visited.size() + "
-					// "+listOfCities.size());
-					if (distance_min > distance && list.size() == listOfCities.size()) {
-						for (int i = 0; i < recLevel; i++) {
-							System.out.print("------");
-						}
-						System.out.println("CHANGE DIST Min from " + distance_min + " to " + distance + print(list));
-						distance_min = distance;
-					}
-				}
+			if (d.start.equals(nextNode) && !alreadyVisited(d.end, list)) {
+				System.out.println(d.print());
 			}
 		}
+		for (DistanceModel d : listOfDistances) {
+			ArrayList<String> visited = new ArrayList<>();
+			for(String s: list){
+				visited.add(s);
+			}
+			if (d.start.equals(nextNode) && !alreadyVisited(d.end, visited)) {
+				System.out.println();
+				visited.add(d.end);
+				print("Liste : ",visited);
+				System.out.println("try "+d.print());
+				int distance = moreWay(d.end, start, end, visited, ++recLevel) + d.distance;
+				System.out.println(distance);
+			}
+			try {
+				Thread.sleep(10);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		// for (int i = 0; i < recLevel; i++) {
+		// System.out.print("------");
+		// }
+		// System.out.println("Return Min from " + distance_min + "" +
+		// print(list));
 		// System.out.println("CHANGE DIST Min from " + distance_min + " to ");
 		return distance_min;
 	}
@@ -118,11 +95,10 @@ public class TravelerSalesmanProblem {
 	public void calculateShortestRoute() {
 		System.out.println(sillyCalculation());
 		// ArrayList<String> visitedCities = new ArrayList<>();
-		ArrayList<String> visitedFinalCities = new ArrayList<>();
 		LinkedList<Integer> results = new LinkedList<>();
 
-		for (DistanceModel d : listOfDistances) {
-			System.out.println(d.print());
+		for (DistanceModel n : listOfDistances) {
+			System.out.println(n.print());
 		}
 
 		for (String startingCity : listOfCities) {
@@ -131,14 +107,18 @@ public class TravelerSalesmanProblem {
 				if (startingCity.equals(endingCity)) {
 
 				} else {
+					System.out.println();
+					System.out.println("###### " + startingCity + " " + endingCity + " " + visited.size());
 					visited.add(startingCity);
-					results.add(moreWay(startingCity, startingCity, endingCity, visited, 1));
-					if (visited.size() == listOfCities.size()) {
-						System.out.println("###### " + startingCity + " " + endingCity + " " + visited.size());
-						for (String s : visited) {
-							System.out.println(s);
-						}
+					int result = moreWay(startingCity, startingCity, endingCity, visited, 1);
+					System.out.println("RETURN " + result);
+					results.add(result);
+					// if (visited.size() == listOfCities.size()) {
+					System.out.println("###### " + startingCity + " " + endingCity + " " + visited.size());
+					for (String s : visited) {
+						System.out.println(s);
 					}
+					// }
 				}
 			}
 		}
@@ -151,56 +131,14 @@ public class TravelerSalesmanProblem {
 		}
 	}
 
-	private int calculateDistance(String endingCity, String city, ArrayList<String> visitedCities) {
-//		System.out.println(print("visited cities", visitedCities));
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(print("visitedCities", visitedCities));
-		if (city.equals(endingCity)) {
-			System.out.println("already ending city");
-			visitedCities.add(city);
-			return 0;
-		}
-		String visited = "";
-		int distance_min = Integer.MAX_VALUE;
-		for (DistanceModel d : listOfDistances) {
-			if (d.start.equals(city) && alreadyNotVisited(d.end, visitedCities)) {
-				visitedCities.add(d.end);
-				int distance = calculateDistance(endingCity, d.end, visitedCities) + d.distance;
-				if (distance <= distance_min) {
-					for (String s : visitedCities) {
-						System.out.println("visited: " + s);
-					}
-					distance_min = distance;
-					visited = d.end;
-				}
-			}
-		}
-		visitedCities.add(visited);
-		return distance_min;
-	}
-
-	private boolean checkCities(ArrayList<String> visitedCities) {
-		if (visitedCities.size() != listOfCities.size()) {
-			System.out.println("Visited not all " + visitedCities.size() + " " + listOfCities.size());
-			return false;
-		}
-		return true;
-	}
-
-	private boolean alreadyNotVisited(String cityToCheck, ArrayList<String> visitedCities) {
-		System.out.println(print("visited list: ", visitedCities) + " check:" + cityToCheck);
+	private boolean alreadyVisited(String cityToCheck, ArrayList<String> visitedCities) {
 		for (String city : visitedCities) {
 			if (city.equals(cityToCheck)) {
-				return false;
+				return true;
 			}
 		}
 		// System.out.println("Found city! " + cityToCheck);
-		return true;
+		return false;
 	}
 
 	private String print(String title, ArrayList<String> visitedCities) {
