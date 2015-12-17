@@ -1,0 +1,6 @@
+A to B = 100
+A to C = 4
+A to D = 20
+B to C = 300
+B to D = 6
+C to D = 5
