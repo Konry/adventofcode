@@ -3,10 +3,6 @@ package twelve;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class JSONReader {
 	int count = 0;
 	int objectCount = 0;
