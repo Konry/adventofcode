@@ -48,31 +48,10 @@ public class Day24 {
 							for (int m = pl.length - 1; m >= 0; m--) {
 								for (int n = pl.length - 1; n >= 0; n--) {
 									for (int o = pl.length - 1; o >= 0; o--) {
-										// for (int p = pl.length - 1; p >= 0;
-										// p--) {
-										// for (int q = pl.length - 1; q >= 0;
-										// q--) {
-
 										if (i != j && i != k && i != l && i != m && i != n && j != k && j != l && j != m
 												&& j != n && k != l && k != m && k != n && l != m && l != n && m != n
 												&& i != o && j != o && k != o && l != o && m != o && n != o) {
-											// if (i != j && i != k && i != l &&
-											// i != m && i != n && j != k && j
-											// != l
-											// && j != m && j != n && k != l &&
-											// k != m && k != n && l != m
-											// && l != n && m != n && i != o &&
-											// i != p && i != q && j != o
-											// && j != p && j != q && k != o &&
-											// k != p && k != q && l != o
-											// && l != p && l != q && m != o &&
-											// m != p && m != q && n != o
-											// && n != p && n != q && o != p &&
-											// o != q && p != q) {
 											count++;
-											// System.out.println("inside
-											// "+count+ " "+i+" "+j+" "+k+" "+l+
-											// " "+m+" "+n+ " "+o+" "+p+" "+q);
 											list.clear();
 											int sumOfWeights = 0;
 											int tempSumOfPackages = 0;
@@ -80,8 +59,6 @@ public class Day24 {
 											sumOfWeights += pl[i];
 											tempSumOfPackages++;
 											list.add(pl[i]);
-											// System.out.println("add "+i+"
-											// "+sumOfWeights);
 											PrintListIfReached(sumToReach, list, sumOfWeights);
 											if (sumOfWeights == sumToReach && tempSumOfPackages <= sumOfPackages
 													&& minimalQuantumSum >= quantumWeight(list)) {
@@ -93,9 +70,6 @@ public class Day24 {
 												break;
 											}
 											sumOfWeights += pl[j];
-											// System.out.println("add "+i+"
-											// "+sumOfWeights+" "+sumToReach+"
-											// "+(sumOfWeights > sumToReach));
 											tempSumOfPackages++;
 											list.add(pl[j]);
 											PrintListIfReached(sumToReach, list, sumOfWeights);
@@ -173,127 +147,96 @@ public class Day24 {
 											} else if (sumOfWeights > sumToReach || tempSumOfPackages > sumOfPackages) {
 												break;
 											}
-//											sumOfWeights += pl[p];
-//											tempSumOfPackages++;
-//											list.add(pl[p]);
-//											PrintListIfReached(sumToReach, list, sumOfWeights);
-//											if (sumOfWeights == sumToReach && tempSumOfPackages <= sumOfPackages
-//													&& minimalQuantumSum >= quantumWeight(list)) {
-//												minimalQuantumSum = quantumWeight(list);
-//												sumOfPackages = tempSumOfPackages;
-//												System.out.println(minimalQuantumSum + " " + sumOfPackages);
-//												break;
-//											} else if (sumOfWeights > sumToReach || tempSumOfPackages > sumOfPackages) {
-//												break;
-//											}
-//											sumOfWeights += pl[q];
-//											tempSumOfPackages++;
-//											list.add(pl[q]);
-//											PrintListIfReached(sumToReach, list, sumOfWeights);
-//											if (sumOfWeights == sumToReach && tempSumOfPackages <= sumOfPackages
-//													&& minimalQuantumSum >= quantumWeight(list)) {
-//												minimalQuantumSum = quantumWeight(list);
-//												sumOfPackages = tempSumOfPackages;
-//												System.out.println(minimalQuantumSum + " " + sumOfPackages);
-//												break;
-//											} else if (sumOfWeights > sumToReach || tempSumOfPackages > sumOfPackages) {
-//												break;
-//											}
 										}
 									}
-//								}
-//							}
+								}
+							}
 						}
 					}
 				}
 			}
+			System.out.println("Packages " + sumOfPackages + " with quantum sum " + minimalQuantumSum);
+			return minimalQuantumSum;
+
 		}
-	}System.out.println("Packages "+sumOfPackages+" with quantum sum "+minimalQuantumSum);return minimalQuantumSum;
 
-	}
-
-	private void PrintListIfReached(int sumToReach, ArrayList<Integer> list, int sumOfWeights) {
-		boolean show = false;
-		if (sumToReach == sumOfWeights && show) {
-			System.out.print("Sum reached with: ");
-			for (Integer integ : list) {
-				System.out.print(" " + integ);
+		private void PrintListIfReached(int sumToReach, ArrayList<Integer> list, int sumOfWeights) {
+			boolean show = false;
+			if (sumToReach == sumOfWeights && show) {
+				System.out.print("Sum reached with: ");
+				for (Integer integ : list) {
+					System.out.print(" " + integ);
+				}
+				System.out.println();
 			}
-			System.out.println();
 		}
-	}
 
-	private boolean checkConditions(ArrayList<Integer> list, int sumOfWeights, int tempSumOfPackages, int sumToReach,
-			int sumOfPackages, int minimalQuantumSum) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+		public int choosePackage(int[] packageList, boolean[] isAlreadyPacked, ArrayList<Integer> packageDistribution,
+				int reachableSum) throws InterruptedException {
+			int levelReached = 0;
+			int quantumSum = Integer.MAX_VALUE;
+			ArrayList<Integer> returnPackageDistribution = packageDistribution;
 
-	public int choosePackage(int[] packageList, boolean[] isAlreadyPacked, ArrayList<Integer> packageDistribution,
-			int reachableSum) throws InterruptedException {
-		int levelReached = 0;
-		int quantumSum = Integer.MAX_VALUE;
-		ArrayList<Integer> returnPackageDistribution = packageDistribution;
+			int sumPackage = 0;
+			while (sumPackage <= reachableSum) {
 
-		int sumPackage = 0;
-		while (sumPackage <= reachableSum) {
+			}
+			int index = (int) (Math.random() % packageList.length);
 
-		}
-		int index = (int) (Math.random() % packageList.length);
-
-		for (index = 0; index <= packageList.length; index++) {
-			System.out.println("choose " + packageList);
-			ArrayList<Integer> tempPackageDistribution = packageDistribution;
-			if (!checkIfExits(packageList[index], packageDistribution)) {
-				int sumOfEdge = sum(packageDistribution);
-				if (sumOfEdge < reachableSum) {
-					int temp = choosePackage(packageList, isAlreadyPacked, tempPackageDistribution, reachableSum);
-					if (temp > 0 && temp < quantumSum) {
-						returnPackageDistribution = tempPackageDistribution;
-						quantumSum = temp;
+			for (index = 0; index <= packageList.length; index++) {
+				System.out.println("choose " + packageList);
+				ArrayList<Integer> tempPackageDistribution = packageDistribution;
+				if (!checkIfExits(packageList[index], packageDistribution)) {
+					int sumOfEdge = sum(packageDistribution);
+					if (sumOfEdge < reachableSum) {
+						int temp = choosePackage(packageList, isAlreadyPacked, tempPackageDistribution, reachableSum);
+						if (temp > 0 && temp < quantumSum) {
+							returnPackageDistribution = tempPackageDistribution;
+							quantumSum = temp;
+						}
+					} else if (sumOfEdge > reachableSum) {
+						return -1;
+					} else if (sumOfEdge == reachableSum) {
+						levelReached++;
 					}
-				} else if (sumOfEdge > reachableSum) {
-					return -1;
-				} else if (sumOfEdge == reachableSum) {
-					levelReached++;
+				}
+				Thread.sleep(500);
+			}
+			return -1;
+		}
+
+		public boolean checkIfExits(int weight, ArrayList<Integer> packageDistribution) {
+			boolean doesExist = false;
+			for (Integer weightPackage : packageDistribution) {
+				if (weight == weightPackage) {
+					return true;
 				}
 			}
-			Thread.sleep(500);
+			return false;
 		}
-		return -1;
-	}
 
-	public boolean checkIfExits(int weight, ArrayList<Integer> packageDistribution) {
-		boolean doesExist = false;
-		for (Integer weightPackage : packageDistribution) {
-			if (weight == weightPackage) {
-				return true;
+		public int sum(ArrayList<Integer> packageWeights) {
+			int sum = 0;
+			for (int weight : packageWeights) {
+				sum += weight;
 			}
+			return sum;
 		}
-		return false;
-	}
 
-	public int sum(ArrayList<Integer> packageWeights) {
-		int sum = 0;
-		for (int weight : packageWeights) {
-			sum += weight;
+		public int sum(int[] packageWeights) {
+			int sum = 0;
+			for (int weight : packageWeights) {
+				sum += weight;
+			}
+			return sum;
 		}
-		return sum;
-	}
 
-	public int sum(int[] packageWeights) {
-		int sum = 0;
-		for (int weight : packageWeights) {
-			sum += weight;
+		public long quantumWeight(ArrayList<Integer> packageWeights) {
+			long sum = 1;
+			for (int weight : packageWeights) {
+				sum *= weight;
+			}
+			return sum;
 		}
-		return sum;
 	}
-
-	public long quantumWeight(ArrayList<Integer> packageWeights) {
-		long sum = 1;
-		for (int weight : packageWeights) {
-			sum *= weight;
-		}
-		return sum;
-	}
-}}
+}

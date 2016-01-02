@@ -19,7 +19,6 @@ public class Day25 {
 
 		public int calcManualBook(int row, int col) {
 			int calcToRow = row + col - 1;
-//			System.out.println(calcToRow);
 			manualBook = new int[calcToRow][calcToRow];
 			manualBook[0][0] = startingCode;
 
@@ -30,12 +29,9 @@ public class Day25 {
 			while (!filledUp) {
 				int j = 1;
 				for (int i = level; i > 0; i--) {
-//					System.out.println(calcValue(lastValue) + " at " + i + " " + j+" "+(row == i) +" "+ (col== j)+ " "+row+ " "+col);
 					manualBook[i - 1][j - 1] = calcValue(lastValue);
 					lastValue = manualBook[i - 1][j - 1];
 					if (row == i && col == j) {
-//						System.out.println(i + " " + j);
-//						System.out.println(calcValue(lastValue));
 						return manualBook[row - 1][col - 1];
 					}
 					j++;
@@ -44,13 +40,6 @@ public class Day25 {
 			}
 
 			return manualBook[row - 1][col - 1];
-
-			// 1,1 2
-			// 2,1 3
-			// 1,2 3
-			// 3,1 4
-			// 2,2 4
-			// 1,3 4
 		}
 
 		private int calcValue(int lastValue) {
